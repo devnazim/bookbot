@@ -1,21 +1,16 @@
 def count_letters(txt):
     lower_txt = txt.lower()
     char_dict = {}
-    res = []
-    def sort_on(d):
-        return d["count"]
     for char in lower_txt:
         if char in char_dict:
             char_dict[char] += 1
         else:
             char_dict[char] = 1
+    arr = list(filter(lambda d: d[0].isalpha(), char_dict.items()))
+    arr.sort(reverse=True, key=lambda d: d[1])
+    print(arr)
 
-    for letter in char_dict:
-        if letter.isalpha():
-            # res.append(dict([(letter, char_dict[letter])]))
-            res.append({ 'letter': letter, 'count': char_dict[letter] })
-    res.sort(reverse=True, key=sort_on)
-    return res
+    return arr
 
 def main():
     with open("./books/frankenstein.txt") as f:
@@ -25,7 +20,7 @@ def main():
         count = count_letters(file_content)
 
         for c in count:
-            print(f"The '{c['letter']}' character was found {c['count']} times")
+            print(f"The '{c[0]}' character was found {c[1]} times")
 
         print("--- End report ---")
 
